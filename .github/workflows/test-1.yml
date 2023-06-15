@@ -1,0 +1,53 @@
+name: Magma Build & Publish
+on:
+  workflow_dispatch: null
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types: [ opened, reopened, synchronize ]
+  workflow_call:
+    outputs:
+      orc8r_artifact: 
+        value: ${{ jobs.orc8r-build.outputs.artifacts }}
+jobs:
+  agw-build:
+    uses: ./.github/workflows/test-2.yml
+  orc8r-build:
+    name: orc8r build job
+    runs-on: ubuntu-20.04
+    outputs:
+      artifacts: ${{ steps.step1.outputs.test }}
+    steps:
+      - id: step1
+        run: | 
+          echo "test=orc8r" >> "$GITHUB_OUTPUT"
+  nms-build:
+    name: nms build job
+    runs-on: ubuntu-20.04
+    outputs:
+      artifacts: ${{ steps.step1.outputs.test }}
+    steps:
+      - id: step1
+        run: echo "test=nms" >> "$GITHUB_OUTPUT"
+  Publish_to_firebase:
+    name: Publish to firebase
+    runs-on: ubuntu-20.04
+    needs:
+      [
+        orc8r-build,
+        nms-build,
+        agw-build
+      ]
+    steps:
+      - name: Publish To 
+        env:
+          ORC8R_ARTIFACTS: ${{ needs.orc8r-build.outputs.artifacts }}
+          NMS_ARTIFACTS: ${{ needs.nms-build.outputs.artifacts }}
+          AGW_AR: ${{ needs.agw-build.outputs.artifacts }}
+        run: |
+          echo ${ORC8R_ARTIFACTS}
+          echo ${NMS_ARTIFACTS}
+          echo ${AGW_AR}
