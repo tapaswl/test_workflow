@@ -1,0 +1,15 @@
+name: AGW Build & Publish
+on:
+  workflow_call:
+    outputs:
+      artifacts:
+        value: ${{ jobs.agw-build.outputs.artifacts }}
+jobs:
+  agw-build:
+    name: agw build job
+    runs-on: ubuntu-latest
+    outputs:
+      artifacts: ${{ steps.step1.outputs.test }}
+    steps:
+      - id: step1
+        run: echo "test=agw" >> "$GITHUB_OUTPUT"
