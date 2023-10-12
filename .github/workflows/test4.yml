@@ -1,0 +1,28 @@
+name: Test Workflow Dispatch
+on:
+  workflow_dispatch: null
+  push:
+    branches: 
+      - main
+    paths:
+      - .github/workflows/test4.yml
+jobs:
+  test_values:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Test variables
+        shell: bash
+        run: |
+          echo "${{ github.event_name }}"
+          echo "${{ github.ref_name }}"
+          echo "${{ github.repository_owner }}"
+  test_push_event:
+    if: |
+      (github.event_name == 'push' && 
+      github.ref_name == 'main' && 
+      github.repository_owner == 'tapaswl' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Test Shell
+        shell: bash
+        run: echo "Hi"
