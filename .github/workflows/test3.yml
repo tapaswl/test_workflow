@@ -6,6 +6,13 @@ on:
     paths:
       - .github/workflows/test3.yml
 jobs:
+  test_values:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Test variables
+        shell: bash
+        run: |
+          echo github.event_name
   test_push_event:
     if: |
       github.event_name == 'push' &&
