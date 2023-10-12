@@ -16,7 +16,10 @@ jobs:
           echo "${{ github.ref_name }}"
           echo "${{ github.repository_owner }}"
   test_push_event:
-    if: github.event_name == 'push' && github.ref_name == 'main' && github.repository_owner == 'tapaswl'
+    if: |
+      github.event_name == 'push' && 
+      github.ref_name == 'main' && 
+      github.repository_owner == 'tapaswl'
     runs-on: ubuntu-20.04
     steps:
       - name: Test Shell
