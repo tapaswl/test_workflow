@@ -6,12 +6,13 @@ on:
     paths:
       - .github/workflows/test3.yml
 jobs:
-  if: |
-    github.event_name == 'push' &&
-    github.ref_name == 'master' &&
-    github.repository_owner == 'test_workflow'
-  run_on: ubuntu-20.04
-  steps:
-    - name: Test Shell
-      shell: bash
-      run: echo "Hi"
+  test_push_event:
+    if: |
+      github.event_name == 'push' &&
+      github.ref_name == 'master' &&
+      github.repository_owner == 'test_workflow'
+    run_on: ubuntu-20.04
+    steps:
+      - name: Test Shell
+        shell: bash
+        run: echo "Hi"
