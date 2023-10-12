@@ -10,7 +10,7 @@ jobs:
     if: |
       github.event_name == 'push' &&
       github.ref_name == 'master' &&
-      github.repository_owner == 'test_workflow'
+      github.repository_owner == 'tapaswl'
     runs-on: ubuntu-20.04
     steps:
       - name: Test Shell
