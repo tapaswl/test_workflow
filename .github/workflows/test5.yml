@@ -20,7 +20,10 @@ jobs:
     if: |
       (github.event_name == 'push' && 
       github.ref_name == 'main' && 
-      github.repository_owner == 'tapaswl' || github.event_name == 'workflow_dispatch')
+      github.repository_owner == 'tapaswl' || 
+      github.event_name == 'workflow_dispatch' &&
+      github.ref_name == 'main' && 
+      github.repository_owner == 'tapaswl')
     runs-on: ubuntu-20.04
     steps:
       - name: Test Shell
