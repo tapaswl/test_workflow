@@ -1,0 +1,16 @@
+name: Test Upload Artifact
+on:
+  workflow_dispatch: null
+jobs:
+  docker-build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Create a file
+        run: |
+          mkdir images
+          echo "HI" > images/hi.txt
+          echo "HI2" > images/hi2.txt
+      - uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # pin@v3
+        with:
+          name: test-image
+          path: images
